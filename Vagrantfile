@@ -17,7 +17,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         vb.memory = "200"
     end
   
-  config.vm.synced_folder "../proyecto", "/www/www.proyecto.com", disabled: (not FileTest::directory?("../proyecto"))  
+  config.vm.synced_folder "../proyecto", "/www/www.proyecto.local.com", disabled: (not FileTest::directory?("../proyecto"))  
 
 
   config.vm.provision :shell do |shell|
