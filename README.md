@@ -28,8 +28,10 @@ con nombres específicos para cada proyecto. Es decir, se espera un sistema de a
 
 
         (workspace)- archivos
-       	--proyecto
-       	  --web
+        --VirtualMachine
+           --files
+       	--proyecto (carpeta)
+       	  --public
 
 Para hacer accesibles las paginas publicadas por el servidor virtual, necesitamos poner 
 las siguientes lineas en el archivo hosts (/etc/hosts en linux y mac, 
@@ -165,8 +167,7 @@ para determinar las posibles causas. Las causas mas probables son:
 
 2. Que haga falta alguna tabla/campo/vista/esquema en la base de datos:
     * Síntomas: Verás errores al ejecutar sentencias de sql.
-    * Solución: Determinar que parte de la BD está faltando, obtenerla del servidor 232 y agregarlo a la base de datos de tu ambiente local.
-    * Nota: Cuando determines que es lo que hace falta por favor agrega un script a la carpeta vagrant/DB  para que los demás no tengan este problema en el futuro.
+    * Nota: Cuando determines que es lo que hace falta por favor agrega un script a la carpeta vagrant/database  para que los demás no tengan este problema en el futuro.
 
 3. Que se este intentando contactar algún servicio inalcanzable.
     * Síntomas: generalmente en estos casos verás que tarda mucho en responderte el sitio y posteriormente fallará, en el log verás el error referente a que no puedes alcanzar alguna url.
