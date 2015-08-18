@@ -3,6 +3,8 @@ if ! rpm -qa | grep -qw openvpn; then
    sudo yum install -y openvpn;
 fi
 if ! rpm -qa | grep -qw gcc; then
+    sudo rpm -ivh http://epel.mirror.net.in/epel/6/i386/epel-release-6-8.noarch.rpm;
+    sudo yum install -y epel-release;
     sudo yum install -y gcc gcc-c++ patch readline readline-devel curl zlib zlib-devel libyaml-devel libffi-devel openssl-devel make bzip2 autoconf automake libtool bison iconv-devel;
 fi
 #if ! rpm -qa | grep -qw gcc; then
@@ -66,8 +68,8 @@ fi
 sudo touch /etc/puppet/hiera.yaml;
 #istalo los modulos de los que depende mi site.pp
 sudo puppet module install jfryman-nginx;
-sudo puppet module install thias-php
-sudo puppet module install example42-yum
-sudo puppet module install puppetlabs-mysql
-sudo puppet module install puppetlabs-firewall
-sudo puppet module install willdurand/nodejs
+sudo puppet module install thias-php;
+sudo puppet module install example42-yum;
+sudo puppet module install puppetlabs-mysql;
+sudo puppet module install puppetlabs-firewall;
+sudo puppet module install willdurand/nodejs;

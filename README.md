@@ -191,11 +191,3 @@ El presente repositorio son de:
 
         Ricardo Jesus Ruiz Cruz <ricardojesus.ruizcruz@gmail.com>
         Eduardo Cruz <eduardo.cruz.a85@gmail.com>
-
-Si necesitas implementarlo, alguna duda o deseas apoyar con el repositorio no dudes en
-contactarnos.
-
-        marketplace.yaguer.com.mx
-        jenkins.yaguer.com.mx
-            user:market
-            pass:market

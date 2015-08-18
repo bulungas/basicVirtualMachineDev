@@ -193,7 +193,7 @@ class ecommerce {
     }
 }
 class stackmean{
-    require websrv
+    require pkgsextra
     class { 'nodejs':
         version => 'v0.10.25',
         make_install => true,
@@ -207,27 +207,7 @@ class stackmean{
         provider => npm,
         require  => Class['nodejs']
     }
-    package { 'grunt-contrib-concat':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'grunt-contrib-uglify':
-        provider => npm,
-        require  => Class['nodejs']
-    }
     package { 'grunt-cli':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'grunt-contrib-less':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'grunt-contrib-watch':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'jit-grunt':
         provider => npm,
         require  => Class['nodejs']
     }
@@ -236,10 +216,6 @@ class stackmean{
         require  => Class['nodejs']
     }
     package { 'less':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'node-sass':
         provider => npm,
         require  => Class['nodejs']
     }
@@ -255,11 +231,7 @@ class stackmean{
         provider => npm,
         require  => Class['nodejs']
     }
-    package { 'grunt-contrib-sass':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'grunt-browser-sync':
+    package { 'gulp':
         provider => npm,
         require  => Class['nodejs']
     }
