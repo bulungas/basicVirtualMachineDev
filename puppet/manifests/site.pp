@@ -47,6 +47,12 @@ class mysqlSrv{
                 password_hash => '*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19',#hash de la palabra password
             },
         },
+        users => {
+            'root@localhost' => {
+                ensure => 'present',
+                password_hash => '*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19',#hash de la palabra password
+            },
+        },
     }->
     mysql_grant { 'root@%/*.*':
         ensure     => 'present',
@@ -54,7 +60,15 @@ class mysqlSrv{
         privileges => ['ALL'],
         table      => '*.*',
         user       => 'root@%',
+    }->
+    mysql_grant { 'root@localhost/*.*':
+        ensure     => 'present',
+        options    => ['GRANT'],
+        privileges => ['ALL'],
+        table      => '*.*',
+        user       => 'root@localhost',
     }
+
 }
 class createdb{
         mysql::db{'proyecto':

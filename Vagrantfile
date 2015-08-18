@@ -27,7 +27,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file = "site.pp"
   end
-  #config.vm.provision :shell do |s|
-  #  s.inline = "cat /vagrant/vagrant/DB/schema/*.sql /vagrant/vagrant/DB/data/*.sql | mysql -u root -f"
-  #end
+  config.vm.provision :shell do |s|
+    s.inline = "cat /vagrant/vagrant/database/*.sql | mysql -u root -f"
+  end
 end

@@ -97,9 +97,7 @@ El servidor virtual creado por vagrant con los archivos de este proyecto, tiene 
 	 compass
 	 xdebug
 	 y una serie de librerías de php
- 
-Ademas configura un virtualhost para cada uno de los sistemas o proyectos que componen el ecosistema de SIAE
-	 
+ 	 
 Además genera las bases de datos a las que se conectan estas aplicaciones con datos muestra. ( aún hace falta llenar algunos catálogos y generar algunas vistas )
 	 
 ### ¿ Cómo tengo que configurar los proyectos ?
