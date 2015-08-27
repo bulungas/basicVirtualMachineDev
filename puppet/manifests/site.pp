@@ -46,13 +46,11 @@ class mysqlSrv{
                 ensure => 'present',
                 password_hash => '*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19',#hash de la palabra password
             },
-        },
-        users => {
             'root@localhost' => {
                 ensure => 'present',
                 password_hash => '*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19',#hash de la palabra password
             },
-        },
+        }
     }->
     mysql_grant { 'root@%/*.*':
         ensure     => 'present',
@@ -246,6 +244,26 @@ class stackmean{
         require  => Class['nodejs']
     }
     package { 'gulp':
+        provider => npm,
+        require  => Class['nodejs']
+    }
+    package { 'gulp-util':
+        provider => npm,
+        require  => Class['nodejs']
+    }
+    package { 'gulp-uglify':
+        provider => npm,
+        require  => Class['nodejs']
+    }
+    package { 'gulp-concat':
+        provider => npm,
+        require  => Class['nodejs']
+    }
+    package { 'gulp-notify':
+        provider => npm,
+        require  => Class['nodejs']
+    }
+    package { 'gulp-react':
         provider => npm,
         require  => Class['nodejs']
     }
