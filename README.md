@@ -1,8 +1,7 @@
 # Plataforma de desarrollo basicVirtualMachineDev
-Plataforma de LEMP con compass y nodejs
+Plataforma de LEMP con compass y MEAN
 
 Asi mismo esta plataforma es de software libre.
-
 
 # Desarrollo Local
 
