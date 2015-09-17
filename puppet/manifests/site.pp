@@ -32,49 +32,26 @@ class websrv{
         ensure     => present,
     }
 }
-class mysqlSrv{
-    require ::mysql::client
+class mysqlSrv {
     class { '::mysql::server':
-        override_options => {
-            'mysqld' => {
-                'lower_case_table_names' => '1',
-                'bind-address'          => '0.0.0.0',
-            }
-        },
-        users => {
-            'root@%' => {
-                ensure => 'present',
-                password_hash => '*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19',#hash de la palabra password
-            },
-            'root@localhost' => {
-                ensure => 'present',
-                password_hash => '*2470C0C06DEE42FD1618BB99005ADCA2EC9D1E19',#hash de la palabra password
-            },
-        }
-    }->
-    mysql_grant { 'root@%/*.*':
-        ensure     => 'present',
-        options    => ['GRANT'],
-        privileges => ['ALL'],
-        table      => '*.*',
-        user       => 'root@%',
-    }->
-    mysql_grant { 'root@localhost/*.*':
-        ensure     => 'present',
-        options    => ['GRANT'],
-        privileges => ['ALL'],
-        table      => '*.*',
-        user       => 'root@localhost',
+      root_password           => 'password',
+      remove_default_accounts => true
     }
+    mysql::db { 'proyecto':
+      user     => 'proyecto',
+      password => mysql_password('password'),
+      host     => 'localhost',
+      grant    => ['ALL'],
+    }
+    mysql_grant { 'proyecto@localhost/*.*':
+      ensure     => 'present',
+      options    => ['GRANT'],
+      privileges => ['ALL'],
+      table      => '*.*',
+      user       => 'proyecto@localhost',
+    }
+}
 
-}
-class createdb{
-        mysql::db{'proyecto':
-        user     => 'root',
-        password => 'password',
-        host     => '127.0.0.1',
-    }
-}
 class appsrv {
     require yum::repo::remi
     require yum::repo::epel
@@ -136,38 +113,18 @@ class appsrv {
         mode   => 664,
     }
 }
-class xdebug{
+class xdebug {
     require appsrv
     package { ['php-devel'] :
         ensure  => present,
-    }->
-    exec { "install_xdebug":
-       path => "/usr/bin/",
-       command => "sudo pecl install Xdebug",
-       creates => "/usr/lib64/php/modules/xdebug.so"
-    }->
-    file { "/etc/php.d/xdebug.ini":
-        ensure  => file,
-        notify  => Service['php-fpm'],
-        content => "[xdebug]
-            zend_extension=\"/usr/lib64/php/modules/xdebug.so\"
-            xdebug.remote_enable        = 1
-            xdebug.remote_connect_back  = 1
-            xdebug.collect_params       = 4
-            xdebug.collect_vars         = on
-            xdebug.dump_globals         = on
-            xdebug.dump.SERVER          = REQUEST_URI
-            xdebug.show_local_vars      = on
-            xdebug.cli_color            = 1
-            #xdebug.force_error_reporting = E_ALL & ~E_DEPRECATED",
     }
 }
-class ecommerce {
+class hostweb {
     require websrv
     require appsrv
     require mysqlSrv
-    require createdb
     require xdebug
+
     nginx::resource::vhost { 'www.proyecto.local.com':
         www_root => '/www/www.proyecto.local.com/public',
         ssl => true,
@@ -204,70 +161,56 @@ class ecommerce {
         }
     }
 }
-class stackmean{
-    require pkgsextra
-    class { 'nodejs':
-        version => 'v0.10.25',
-        make_install => true,
-        target_dir => '/bin',
+class stackmean {
+    require appsrv
+    class { 'nodejs': 
+        repo_url_suffix => 'node_0.12'
+    }
+    package { 'inherits':
+      ensure   => 'present',
+      provider => 'npm',
     }
     package { 'express':
-        provider => npm,
-        require  => Class['nodejs']
+      ensure   => 'present',
+      provider => 'npm',
     }
-    package { 'grunt':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'grunt-cli':
-        provider => npm,
-        require  => Class['nodejs']
+    package { 'express-generator':
+      ensure   => 'present',
+      provider => 'npm',
     }
     package { 'bower':
-        provider => npm,
-        require  => Class['nodejs']
+      ensure   => 'present',
+      provider => 'npm',
     }
-    package { 'less':
-        provider => npm,
-        require  => Class['nodejs']
+    package { 'mean-cli':
+      ensure   => 'present',
+      provider => 'npm',
     }
     package { 'jade':
-        provider => npm,
-        require  => Class['nodejs']
+      ensure   => 'present',
+      provider => 'npm',
     }
-    package { 'coffee-script':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'nodefront':
-        provider => npm,
-        require  => Class['nodejs']
+    package { 'nodemon':
+      ensure   => 'present',
+      provider => 'npm',
     }
     package { 'gulp':
-        provider => npm,
-        require  => Class['nodejs']
+      ensure   => 'present',
+      provider => 'npm',
     }
     package { 'gulp-util':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'gulp-uglify':
-        provider => npm,
-        require  => Class['nodejs']
+      ensure   => 'present',
+      provider => 'npm',
     }
     package { 'gulp-concat':
-        provider => npm,
-        require  => Class['nodejs']
+      ensure   => 'present',
+      provider => 'npm',
     }
-    package { 'gulp-notify':
-        provider => npm,
-        require  => Class['nodejs']
-    }
-    package { 'gulp-react':
-        provider => npm,
-        require  => Class['nodejs']
+    package { 'gulp-uglify':
+      ensure   => 'present',
+      provider => 'npm',
     }
 }
 include pkgsextra
 include stackmean
-include ecommerce
+include hostweb
