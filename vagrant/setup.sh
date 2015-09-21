@@ -41,5 +41,4 @@ sudo puppet module install chocolatey-chocolatey;
 sudo puppet module install treydock-gpg_key;
 sudo puppet module install example42-yum;
 sudo puppet module install puppetlabs-mysql;
-sudo puppet module install puppetlabs-firewall;
 sudo puppet module install puppetlabs-nodejs;

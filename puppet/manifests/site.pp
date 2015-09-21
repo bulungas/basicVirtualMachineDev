@@ -212,43 +212,6 @@ class stackmean {
     }
 }
 
-class fwpost{
-
-}
-class fwpre{
-
-}
-class networking{
-    
-    firewall { '100 allow http and https access':
-        dport   => [80, 443, 8080, 8081],
-        proto  => tcp,
-        action => accept,
-      }
-    firewall { '101 allow MySql':
-        dport   => [3306],
-        proto  => tcp,
-        action => accept,
-    }
-    firewall { '102 acept for Output':
-      chain    => 'OUTPUT',
-      proto    => 'all', 
-      action     => 'accept',
-    }
-}
-
-resources { "firewall":
-  purge => true
-}
-Firewall {
-  before  => Class['fwpost'],
-  require => Class['fwpre'],
-}
-
 include pkgsextra
 include stackmean
 include hostweb
-
-class { ['fwpost', 'fwpre']: }
-class { 'firewall': }
-include networking
